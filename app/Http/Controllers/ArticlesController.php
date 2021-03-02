@@ -14,6 +14,15 @@ use Illuminate\Routing\Redirector;
 class ArticlesController extends Controller
 {
     /**
+     *  Rules for validation.
+    */
+    public const VALIDATION_RULES = [
+        'title' => 'required|min:3|max:255',
+        'text' => 'required',
+        'author' => 'required',
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @return Application|Factory|View|Response
@@ -44,21 +53,12 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required|min:3|max:255',
-            'text' => 'required',
-            'author' => 'required',
-        ]);
+        $this->validate($request, self::VALIDATION_RULES);
 
-        $table = new Articles([
-            'title' => $request->get('title'),
-            'text' => $request->get('text'),
-            'author' => $request->get('author'),
-        ]);
+        $table = new Articles($request->all());
         $table->save();
         return redirect()->route('articles.index')
             ->with('message', "Article \"{$request->get('title')}\" created!");
-
     }
 
     /**
@@ -86,19 +86,19 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param $id
      * @param Request $request
      * @param Articles $articles
      * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Articles $articles)
+    public function update($id, Request $request, Articles $articles)
     {
-        $this->validate($request, [
-            'title' => 'required|min:3|max:255',
-            'text' => 'required',
-            'author' => 'required',
-        ]);
+        $row = Articles::findOrFail($id);
 
-        $articles->update($request->all());
+        $this->validate($request, self::VALIDATION_RULES);
+        $row->fill($request->all())->save();
+
         return redirect(route('articles.index'))
             ->with('message', "Article updated!");
     }

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Articles;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 class ArticlesFactory extends Factory
 {
@@ -21,10 +22,13 @@ class ArticlesFactory extends Factory
      */
     public function definition()
     {
+        $categories_id = DB::table('categories')->pluck('category_id');
+
         return [
             'title' => $this->faker->sentence(3),
             'text' => $this->faker->text,
             'author' => $this->faker->name,
+            'category_id' => $this->faker->randomElement($categories_id),
         ];
     }
 }

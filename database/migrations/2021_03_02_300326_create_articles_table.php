@@ -18,7 +18,14 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->text('text');
             $table->string('author');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+        });
+        Schema::table('articles',function (Blueprint $table){
+            $table->foreign('category_id')
+                ->references('category_id')
+                ->on('categories')
+                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +36,9 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
+        Schema::table('articles',function (Blueprint $table){
+            $table->dropForeign('articles_category_id_foreign');
+        });
         Schema::dropIfExists('articles');
     }
 }

@@ -35,6 +35,18 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="category_id" class="font-weight-bold col-form-label text-right col-md-4">Category</label>
+                        <div class="col-md-6">
+                            <select class="form-control" name="category_id" id="category_id">
+                                    <option value="0">Не выбрано</option>
+                                @foreach($categories as $category)
+                                    <option {{ $article->category_id == $category->category_id ? 'selected' : '' }} value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="text" class="font-weight-bold col-form-label text-right col-md-4">Text</label>
                         <div class="col-md-6">
                             <textarea rows="5" class="form-control @error('text') is-invalid @enderror" type="text" name="text" id="text" placeholder="Text...">{{ $article->text }}</textarea>

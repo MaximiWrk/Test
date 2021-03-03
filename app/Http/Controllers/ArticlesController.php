@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articles;
+use App\Models\Categories;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -30,9 +31,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Articles::orderBy('updated_at', 'DESC')->paginate(5);
-        $pages = round(count(Articles::all()) / 5);
-        return view('articles.index', compact('articles'))
-            ->with(['currPage' => (request()->input('page', 1) * 5), 'numPages' => $pages]);
+        return view('articles.index', compact('articles'));
     }
 
     /**
@@ -42,7 +41,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $categories = Categories::orderBy('category_id')->get();
+        return view('articles.create',compact('categories'));
     }
 
     /**
@@ -80,21 +80,22 @@ class ArticlesController extends Controller
      */
     public function edit(Articles $article)
     {
-        return view('articles.edit', compact('article'));
+        $categories = Categories::orderBy('category_id')->get();
+        return view('articles.edit', compact(['article','categories']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param $id
+     * @param $article_id
      * @param Request $request
-     * @param Articles $articles
      * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update($id, Request $request, Articles $articles)
+    public function update(int $article_id, Request $request)
     {
-        $row = Articles::findOrFail($id);
+
+        $row = Articles::findOrFail($article_id);
 
         $this->validate($request, self::VALIDATION_RULES);
         $row->fill($request->all())->save();

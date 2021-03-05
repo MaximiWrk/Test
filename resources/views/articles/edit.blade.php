@@ -7,7 +7,7 @@
                 <h3 class="font-weight-bold">Update "{{ $article->title }}"</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('articles.update', $article->article_id) }}" method="POST">
+                <form action="{{ route('articles.update', $article->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group row">
@@ -38,9 +38,9 @@
                         <label for="category_id" class="font-weight-bold col-form-label text-right col-md-4">Category</label>
                         <div class="col-md-6">
                             <select class="form-control" name="category_id" id="category_id">
-                                    <option value="0">Не выбрано</option>
+                                    <option value="">Не выбрано</option>
                                 @foreach($categories as $category)
-                                    <option {{ $article->category_id == $category->category_id ? 'selected' : '' }} value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                    <option {{ $article->category_id == $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>

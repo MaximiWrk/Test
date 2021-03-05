@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Categories;
+use App\Models\Category;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,7 +13,7 @@ class CategoriesFactory extends Factory
      *
      * @var string
      */
-    protected $model = Categories::class;
+    protected $model = Category::class;
 
     /**
      * Define the model's default state.

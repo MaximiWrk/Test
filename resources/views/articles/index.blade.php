@@ -30,11 +30,11 @@
                                 <td>{{ $article->updated_at }}</td>
                                 <td>{{ $article->author }}</td>
                                 <td class="text-right">
-                                    <form action="{{ route('articles.destroy', $article->article_id) }}" method="POST">
+                                    <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
                                         <a class="btn btn-primary"
-                                           href="{{ route('articles.show',$article->article_id) }}">Show</a>
+                                           href="{{ route('articles.show',$article->id) }}">Show</a>
                                         <a class="btn btn-success"
-                                           href="{{ route('articles.edit',$article->article_id) }}">Edit</a>
+                                           href="{{ route('articles.edit',$article->id) }}">Edit</a>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>

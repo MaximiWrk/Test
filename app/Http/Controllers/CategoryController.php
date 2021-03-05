@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Articles;
-use App\Models\Categories;
+use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Validation\ValidationException;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
 
     /**
@@ -30,7 +30,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::orderBy('updated_at', 'DESC')->paginate(5);
+        $categories = Category::orderBy('updated_at', 'DESC')->paginate(5);
         return view('categories.index', compact('categories'));
     }
 
@@ -55,7 +55,7 @@ class CategoriesController extends Controller
     {
         $this->validate($request, self::VALIDATION_RULES);
 
-        $table = new Categories($request->all());
+        $table = new Category($request->all());
         $table->save();
         return redirect()->route('categories.index')
             ->with('message', "Category \"{$request->get('category_name')}\" created!");
@@ -64,10 +64,10 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Categories $category
+     * @param Category $category
      * @return Response
      */
-    public function show(Categories $category)
+    public function show(Category $category)
     {
         //
     }
@@ -75,10 +75,10 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Categories $category
+     * @param Category $category
      * @return Application|Factory|View|Response
      */
-    public function edit(Categories $category)
+    public function edit(Category $category)
     {
         return view('categories.edit', compact('category'));
     }
@@ -93,7 +93,7 @@ class CategoriesController extends Controller
      */
     public function update(int $category_id, Request $request)
     {
-        $row = Categories::findOrFail($category_id);
+        $row = Category::findOrFail($category_id);
 
         $this->validate($request, self::VALIDATION_RULES);
         $row->fill($request->all())->save();
@@ -110,7 +110,7 @@ class CategoriesController extends Controller
      */
     public function destroy(int $category_id)
     {
-        if (Categories::destroy($category_id)) {
+        if (Category::destroy($category_id)) {
             return redirect(route('categories.index'))
                 ->with('message', "Category deleted!");
         }
@@ -118,9 +118,9 @@ class CategoriesController extends Controller
 
     public function list()
     {
-        $categories = Categories::orderBy('category_id', 'ASC')->paginate(5);
+        $categories = Category::orderBy('id', 'ASC')->paginate(5);
         foreach ($categories as $key => $category) {
-            $articles = Categories::find($category->category_id)->articles;
+            $articles = Category::find($category->id)->articles;
             $categories[$key]['articles_count'] = $articles->count();
         }
         return view('categories.list', compact('categories'));
@@ -128,12 +128,12 @@ class CategoriesController extends Controller
 
     /**
      * @param $category
-     * @param Categories $categories
+     * @param Category $categories
      * @return Application|Factory|View
      */
-    public function browse($category, Categories $categories)
+    public function browse($category, Category $categories)
     {
-        $articles = Categories::find($category)->articles;
+        $articles = Category::find($category)->articles;
 
         return view('categories.browse', compact('articles'));
     }

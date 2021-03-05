@@ -2,27 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Articles;
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Categories extends Model
+class Category extends Model
 {
     use HasFactory;
 
     /**
-     * @var string
-     */
-    protected $primaryKey = 'category_id';
-
-    /**
-     * @var string
-     */
-    protected $table = 'categories';
-
-    /**
-     * @var string[]
+     * List of fillable columns
+     * @var $fillable array
      */
     protected $fillable = [
         'category_name',
@@ -30,9 +22,10 @@ class Categories extends Model
 
     /**
      * @return HasMany
+     * @property-read Collection|Article[]
      */
     public function articles(): HasMany
     {
-        return $this->hasMany(Articles::class,'category_id');
+        return $this->hasMany(Article::class);
     }
 }

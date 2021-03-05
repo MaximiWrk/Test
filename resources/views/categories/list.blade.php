@@ -13,7 +13,7 @@
                             @if(!$categories->isEmpty())
                                 @foreach($categories as $category)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a class="nav-link" href="{{ route('category.browse', $category->category_id) }}">{{ $category->category_name }}</a>
+                                        <a class="nav-link" href="{{ route('category.browse', $category->id) }}">{{ $category->category_name }}</a>
                                         <span class="badge badge-primary badge-pill">{{ $category->articles_count }}</span>
                                     </li>
                                 @endforeach

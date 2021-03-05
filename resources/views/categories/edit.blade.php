@@ -7,7 +7,7 @@
                 <h3 class="font-weight-bold">Update "{{ $category->category_name }}"</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('categories.update', $category->category_id) }}" method="POST">
+                <form action="{{ route('categories.update', $category->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group row">

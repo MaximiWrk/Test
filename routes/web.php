@@ -18,12 +18,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 /* Routes for editing  */
 Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
-    Route::resource('articles', App\Http\Controllers\ArticlesController::class);
-    Route::resource('categories', App\Http\Controllers\CategoriesController::class);
+    Route::resource('articles', App\Http\Controllers\ArticleController::class);
+    Route::resource('categories', App\Http\Controllers\CategoryController::class);
 });
 
 /* Public routes */
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'list'])->name('categories.list');
-    Route::get('/category/{category}', [App\Http\Controllers\CategoriesController::class, 'browse'])->name('category.browse');
+    Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'list'])->name('categories.list');
+    Route::get('/category/{category}', [App\Http\Controllers\CategoryController::class, 'browse'])->name('category.browse');
 });

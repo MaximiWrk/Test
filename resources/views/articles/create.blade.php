@@ -34,12 +34,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="category_id" class="font-weight-bold col-form-label text-right col-md-4">Category</label>
+                        <label for="id" class="font-weight-bold col-form-label text-right col-md-4">Category</label>
                         <div class="col-md-6">
                             <select class="form-control" name="category_id" id="category_id">
                                 <option value="0">Не выбрано</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>

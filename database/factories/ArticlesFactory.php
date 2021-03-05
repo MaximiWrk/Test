@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Articles;
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +13,7 @@ class ArticlesFactory extends Factory
      *
      * @var string
      */
-    protected $model = Articles::class;
+    protected $model = Article::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class ArticlesFactory extends Factory
      */
     public function definition()
     {
-        $categories_id = DB::table('categories')->pluck('category_id');
+        $categories_id = DB::table('categories')->pluck('id');
 
         return [
             'title' => $this->faker->sentence(3),
